@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Melp Data is loaded locally, as CROS prevents accessing the actual link -->
+<script src="resources/data_melp.js"></script>
+
 <head>
 
     <meta charset="utf-8">
@@ -107,29 +116,51 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row" id="table-restaurants">
 
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$24.99</h4>
-                                <h4><a href="#">First Product</a>
-                                </h4>
-                                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            function drawStarts(rating) {
+                                var result =    '<div class="ratings">' +
+                                                    '<p>';
+                                for (var i = 0; i<rating; i++) {
+                                    result += '<span class="glyphicon glyphicon-star"></span>';
+                                }
+                                for (var j = rating; j<4; j++) {
+                                    result += '<span class="glyphicon glyphicon-star-empty"></span>';
+                                }
+                                result +=   '</p>' +
+                                                '</div>';
+                                return result;
+                            }
+
+                            var restaurantCells = ''
+
+                            $.each(melpData, function(index, value) {
+                                var name = value.name;
+                                var contact = value.contact;
+                                var address = value.address;
+                                var rating = value.rating;
+
+                                restaurantCells += '\n' +
+                                    '<div class="col-sm-4 col-lg-4 col-md-4">' +
+                                        '<div class="thumbnail">' +
+                                            '<img src="http://placehold.it/320x150" alt="">' + 
+                                            '<div class="caption">' +
+                                                '<h4><a href="#">' + name + '</a>' +
+                                                '</h4>' +
+                                                '<p>' + address.street + ', ' + address.city + '</p>' +
+                                            '</div>' +
+                                            drawStarts(rating) +
+                                        '</div>' +
+                                    '</div>'
+                            });
+
+                            $('#table-restaurants').append(restaurantCells);
+                        });
+                    </script>
+
+                    
 
                 </div>
 
@@ -155,12 +186,6 @@
 
     </div>
     <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 
