@@ -121,20 +121,20 @@
                     <script type="text/javascript">
                         $(document).ready(function () {
                             function drawStarts(rating) {
-                                var result =    '<div class="ratings">' +
-                                                    '<p>';
+                                var result = '<div class="ratings"> <p>';
                                 for (var i = 0; i<rating; i++) {
                                     result += '<span class="glyphicon glyphicon-star"></span>';
                                 }
                                 for (var j = rating; j<4; j++) {
                                     result += '<span class="glyphicon glyphicon-star-empty"></span>';
                                 }
-                                result +=   '</p>' +
-                                                '</div>';
+                                result += '</p> </div>';
                                 return result;
                             }
 
-                            var restaurantCells = ''
+                            function drawRandomImage() {
+                                return '<img src="resources/img/restaurants/' + restaurantImages[Math.floor(Math.random() * 10)] + '" alt="">'
+                            }
 
                             $.each(melpData, function(index, value) {
                                 var name = value.name;
@@ -142,10 +142,10 @@
                                 var address = value.address;
                                 var rating = value.rating;
 
-                                restaurantCells += '\n' +
+                                var restaurantCells = '\n' +
                                     '<div class="col-sm-4 col-lg-4 col-md-4">' +
                                         '<div class="thumbnail">' +
-                                            '<img src="http://placehold.it/320x150" alt="">' + 
+                                            drawRandomImage() +
                                             '<div class="caption">' +
                                                 '<h4><a href="#">' + name + '</a>' +
                                                 '</h4>' +
@@ -153,10 +153,10 @@
                                             '</div>' +
                                             drawStarts(rating) +
                                         '</div>' +
-                                    '</div>'
-                            });
+                                    '</div>';
 
-                            $('#table-restaurants').append(restaurantCells);
+                                $('#table-restaurants').append(restaurantCells);
+                            });
                         });
                     </script>
 
